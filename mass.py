@@ -364,9 +364,12 @@ def main(cmd):
         if len(cmd) == 2:
             var["call"].append(cmd[1])
         else:
-            print("\x1b[36m已注册函数列表:\033[0m")
-            for idx, func in enumerate(var["call"], 1):
-                print(f"  \033[90m{idx:2d}.\033[0m \033[92m{func}\033[0m")
+            if not var["call"] == []:
+                print("\x1b[36m已注册函数列表:\033[0m")
+                for idx, func in enumerate(var["call"], 1):
+                    print(f"  \033[90m{idx:2d}.\033[0m \033[92m{func}\033[0m")
+            else:
+                print("\x1b[36m没有注册任何函数\033[0m")
 
     elif cmd[0] == "uncall":
         if len(cmd) == 2:
