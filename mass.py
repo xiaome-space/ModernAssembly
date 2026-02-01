@@ -89,16 +89,32 @@ def list():
         print("没有任何寄存器")
         return
 
-    max_len = 0
-    for key in var:
-        key_len = len(str(key))
-        if key_len > max_len:
-            max_len = key_len
+    try:
+        from rich.console import Console
+        from rich.table import Table
+        from rich import box
 
-    for key, value in var.items():
-        aligned_name = str(key).ljust(max_len)
+        console = Console()
+        table = Table(title="", box=box.ROUNDED)
 
-        print(f"\x1b[36m{aligned_name}\033[0m = \033[92m{value}\033[0m")
+        table.add_column("名称", justify="right", style="cyan")
+        table.add_column("值", justify="left", style="bright_green")
+
+        for name in var:
+            table.add_row(name, str(var[name]))
+
+        console.print(table)
+    except:
+        max_len = 0
+        for key in var:
+            key_len = len(str(key))
+            if key_len > max_len:
+                max_len = key_len
+
+        for key, value in var.items():
+            aligned_name = str(key).ljust(max_len)
+
+            print(f"\x1b[36m{aligned_name}\033[0m = \033[92m{value}\033[0m")
 
 def delete(name):
     global var
@@ -348,9 +364,12 @@ def main(cmd):
         if len(cmd) == 2:
             var["call"].append(cmd[1])
         else:
-            print("\x1b[36m已注册函数列表:\033[0m")
-            for idx, func in enumerate(var["call"], 1):
-                print(f"  \033[90m{idx:2d}.\033[0m \033[92m{func}\033[0m")
+            if not var["call"] == []:
+                print("\x1b[36m已注册函数列表:\033[0m")
+                for idx, func in enumerate(var["call"], 1):
+                    print(f"  \033[90m{idx:2d}.\033[0m \033[92m{func}\033[0m")
+            else:
+                print("\x1b[36m没有注册任何函数\033[0m")
 
     elif cmd[0] == "uncall":
         if len(cmd) == 2:
