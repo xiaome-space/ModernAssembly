@@ -480,6 +480,36 @@ def main(cmd):
 
     elif cmd[0] == "ls":
         var["rcx"] = "ls"
+
+    elif cmd[0] == "for":
+        if len(cmd) >= 2:
+            if len(cmd) >= 5 and cmd[2] == "if":
+                if len(cmd) == 6:
+                    if cmd[4] == "back":
+                        var["back"] = True
+                    else:
+                        try:
+                            del var["back"]
+                        except:
+                            pass
+                else:
+                    try:
+                        del var["back"]
+                    except:
+                        pass
+                ret = decision(cmd[3], cmd[4], cmd[5])
+                if ret == True:
+                    for var["eax"] in cmd[1]:
+                        for code in var["code"]:
+                            main(code)
+                            status()
+
+            else:
+                var["string"] = cmd[1]
+                var["rcx"] = "for"
+        else:
+            cmd.append("   ")
+            error(cmd, "\"for\" 只需要 1 个参数", "arg")
     else:
         error(cmd, "未找到此指令", "command")
 
@@ -671,6 +701,15 @@ def status():
             print(f, end='   ')
         print()
 
+    elif var["rcx"] == "for":
+        if var.get("string"):
+            for var["eax"] in var["string"]:
+                for code in var["code"]:
+                    main(code)
+                    status()
+        else:
+            error(["for", "   "], "需要迭代对象", "arg")
+
     elif var["rcx"] in var["call"]:
         if var.get(var["rcx"]):
             try:
@@ -807,6 +846,8 @@ if __name__ == "__main__":
 #     tee                 - 写入code录制的内容到文件
 #     mkdir               - 创建文件夹
 #     cat                 - 查看文件
+#     for <对象>          - 遍历对象到eax
+#         <对象> if <if>  - 条件遍历
 #     exit                - 退出解释器
 #
 #   命令行参数:
@@ -871,6 +912,9 @@ if __name__ == "__main__":
 #     tee:
 #       code
 #       mov rcx tee
+#     for:
+#       mov string <对象>
+#       mov rcx for
 #     exit:
 #       mov rcx exit
 #
