@@ -3,6 +3,8 @@
 
 ModernAssembly 是我用 Python 创建的一种伪汇编语言 （不是真正的汇编！！！）
 
+**推荐安装Rich库 ```pip install rich```**
+
 它内置了25个指令
 
 还有非常简单的module功能
