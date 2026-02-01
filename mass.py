@@ -273,6 +273,14 @@ def main(cmd):
     elif cmd[0].startswith(';'):
         return
 
+    elif cmd[0] in var["call"]:
+        if len(cmd) > 1:
+            var[cmd[0]] = cmd[1:]
+        else:
+            var[cmd[0]] = ""
+
+        var["rcx"] = cmd[0]
+
     elif cmd[0] == "exit":
         var["rcx"] = "exit"
 
@@ -472,14 +480,6 @@ def main(cmd):
 
     elif cmd[0] == "ls":
         var["rcx"] = "ls"
-
-    elif cmd[0] in var["call"]:
-        if len(cmd) > 1:
-            var[cmd[0]] = cmd[1:]
-        else:
-            var[cmd[0]] = ""
-
-        var["rcx"] = cmd[0]
     else:
         error(cmd, "未找到此指令", "command")
 
