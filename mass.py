@@ -276,6 +276,9 @@ def main(cmd):
     elif cmd[0] == "exit":
         var["rcx"] = "exit"
 
+    elif cmd[0] == "mass":
+        error(cmd, "MASS出现毁灭性错误: 作者放假了", "all")
+
     elif cmd[0] == "code":
         var["code"] = []
         while True:
