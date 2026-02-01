@@ -1,5 +1,5 @@
 # ModernAssembly
-## Chinese:
+## Chinese
 
 ModernAssembly 是我用 Python 创建的一种伪汇编语言 （不是真正的汇编！！！）
 
@@ -29,7 +29,7 @@ Hello,My MASS Module!
 Hi
 ```
 
-## English:
+## English
 
 ModernAssembly is a pseudo-assembly I created using Python (Not True Assembly!!!)
 
