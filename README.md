@@ -5,7 +5,11 @@ ModernAssembly 是我用 Python 创建的一种伪汇编语言 （不是真正�
 
 **推荐安装Rich库 ```pip install rich```**
 
-它内置了25个指令
+使用:
+  1. 下载mass.py
+  2. 运行```python mass.py```
+
+它内置了25个指令(命令使用方法见Wiki)
 
 还有非常简单的module功能
 
@@ -37,7 +41,11 @@ ModernAssembly is a pseudo-assembly I created using Python (Not True Assembly!!!
 
 **Recommended to install the Rich library ```pip install rich```**
 
-It has 25 built-in commands
+Usage:
+1. Download mass.py
+2. Run ```python mass.py```
+
+It has 25 built-in commands(For instructions on how to use the command, see the Wiki)
 
 There is also a very simple module feature
 
