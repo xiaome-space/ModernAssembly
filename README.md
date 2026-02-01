@@ -35,6 +35,8 @@ Hi
 
 ModernAssembly is a pseudo-assembly I created using Python (Not True Assembly!!!)
 
+**Recommended to install the Rich library ```pip install rich```**
+
 It has 25 built-in commands
 
 There is also a very simple module feature
