@@ -177,12 +177,12 @@ def decision(first, mode, second):
             else:
                 return False if not var.get("back") == True else True
         elif mode == ">=":
-            if first > second:
+            if first >= second:
                 return True if not var.get("back") == True else False
             else:
                 return False if not var.get("back") == True else True
         elif mode == "<=":
-            if first < second:
+            if first <= second:
                 return True if not var.get("back") == True else False
             else:
                 return False if not var.get("back") == True else True
@@ -510,6 +510,39 @@ def main(cmd):
         else:
             cmd.append("   ")
             error(cmd, "\"for\" 只需要 1 个参数", "arg")
+
+    elif cmd[0] == "sort":
+        if len(cmd) >= 2:
+            var["string"] = cmd[1]
+            var["rcx"]    = "sort"
+        else:
+            cmd.append("   ")
+            error(cmd, "\"sort\" 需要 1 个对象", "arg")
+
+    elif cmd[0] == "split":
+        if len(cmd) >= 2:
+            var["string"] = cmd[1]
+            var["rcx"]    = "split"
+        else:
+            cmd.append("   ")
+            error(cmd, "\"split\" 需要 1 个字符串", "arg")
+
+    elif cmd[0] == "join":
+        if len(cmd) >= 2:
+            var["string"] = cmd[1]
+            var["rcx"]    = "join"
+        else:
+            cmd.append("   ")
+            error(cmd, "\"join\" 需要 1 个对象", "arg")
+
+    elif cmd[0] == "len":
+        if len(cmd) >= 2:
+            var["string"] = cmd[1]
+            var["rcx"]    = "len"
+        else:
+            cmd.append("   ")
+            error(cmd, "\"len\" 需要 1 个字符串", "arg")
+
     else:
         error(cmd, "未找到此指令", "command")
 
@@ -710,6 +743,33 @@ def status():
         else:
             error(["for", "   "], "需要迭代对象", "arg")
 
+    elif var["rcx"] == "sort":
+        if var.get("string"):
+            try:
+                var["eax"] = sorted(var["string"])
+            except TypeError:
+                error(["sort", f"{var['string']}"], "无法排序", "arg")
+        else:
+            error(["sort", "   "], "需要 1 个对象", "arg")
+
+    elif var["rcx"] == "split":
+        if var.get("string"):
+            var["eax"] = var["string"].split()
+        else:
+            error(["split", "   "], "需要 1 个字符串", "arg")
+
+    elif var["rcx"] == "join":
+        if var.get("string"):
+            var["eax"] = ' '.join(var["string"])
+        else:
+            error(["join", "   "], "需要 1 个对象", "arg")
+
+    elif var["rcx"] == "len":
+        if var.get("string"):
+            var["eax"] = len(var["string"])
+        else:
+            error(["len", "   "], "需要 1 个字符串", "arg")
+
     elif var["rcx"] in var["call"]:
         if var.get(var["rcx"]):
             try:
@@ -848,6 +908,10 @@ if __name__ == "__main__":
 #     cat                 - 查看文件
 #     for <对象>          - 遍历对象到eax
 #         <对象> if <if>  - 条件遍历
+#     sort <对象>         - 对对象进行排序并存储在eax寄存器中
+#     split <字符串>      - 将字符串按空格拆分为列表并存储在eax寄存器中
+#     join <对象>         - 将对象按空格连接为字符串并存储在eax寄存器中
+#     len <字符串>        - 获取字符串长度并存储在eax寄存器中
 #     exit                - 退出解释器
 #
 #   命令行参数:
@@ -915,8 +979,27 @@ if __name__ == "__main__":
 #     for:
 #       mov string <对象>
 #       mov rcx for
+#     sleep:
+#       mov int <整数或浮点数>
+#       mov rcx sleep
+#     sort:
+#       mov string <对象>
+#       mov rcx sort
+#     split:
+#       mov string <字符串>
+#       mov rcx split
+#     join:
+#       mov string <对象>
+#       mov rcx join
+#     len:
+#       mov string <字符串>
+#       mov rcx len
 #     exit:
 #       mov rcx exit
+#
+#   语法:
+#     #[变量]  - 使用变量内容
+#     ; <内容> - 注释(需要在一行的开头)
 #
 #   模块教程:
 #     将自定义函数写入module目录下的.py文件中，函数名为调用名
@@ -924,8 +1007,4 @@ if __name__ == "__main__":
 #     如def myfunc(args): ...
 #     如果输入myfunc a b
 #     则args为['a', 'b']
-#
-#   语法:
-#     #[变量]  - 使用变量内容
-#     ; <内容> - 注释(需要在一行的开头)
 #
