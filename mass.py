@@ -177,12 +177,12 @@ def decision(first, mode, second):
             else:
                 return False if not var.get("back") == True else True
         elif mode == ">=":
-            if first > second:
+            if first >= second:
                 return True if not var.get("back") == True else False
             else:
                 return False if not var.get("back") == True else True
         elif mode == "<=":
-            if first < second:
+            if first <= second:
                 return True if not var.get("back") == True else False
             else:
                 return False if not var.get("back") == True else True
@@ -918,14 +918,14 @@ if __name__ == "__main__":
 #     exit:
 #       mov rcx exit
 #
+#   语法:
+#     #[变量]  - 使用变量内容
+#     ; <内容> - 注释(需要在一行的开头)
+#
 #   模块教程:
 #     将自定义函数写入module目录下的.py文件中，函数名为调用名
 #     函数可接受一个参数
 #     如def myfunc(args): ...
 #     如果输入myfunc a b
 #     则args为['a', 'b']
-#
-#   语法:
-#     #[变量]  - 使用变量内容
-#     ; <内容> - 注释(需要在一行的开头)
 #
