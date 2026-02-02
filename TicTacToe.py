@@ -20,10 +20,8 @@ def tictactoe():
      {json['7']} | {json['8']} | {json['9']}
         """)
 
-        if player == "X" and change == True:
-            player = "O"
-        elif player == "O" and change == True:
-            player = "X"
+        if change:
+            player = "O" if player == "X" else "X"
 
         if occupy == True:
             print("该位置已经被占用了~")
