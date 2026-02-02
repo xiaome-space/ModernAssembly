@@ -510,6 +510,15 @@ def main(cmd):
         else:
             cmd.append("   ")
             error(cmd, "\"for\" 只需要 1 个参数", "arg")
+
+    elif cmd[0] == "sort":
+        if len(cmd) >= 2:
+            var["string"] = cmd[1]
+            var["rcx"]    = "sort"
+        else:
+            cmd.append("   ")
+            error(cmd, "\"sort\" 需要 1 个对象", "arg")
+
     else:
         error(cmd, "未找到此指令", "command")
 
@@ -710,6 +719,15 @@ def status():
         else:
             error(["for", "   "], "需要迭代对象", "arg")
 
+    elif var["rcx"] == "sort":
+        if var.get("string"):
+            try:
+                var["eax"] = sorted(var["string"])
+            except TypeError:
+                error(["sort", f"{var['string']}"], "无法排序", "arg")
+        else:
+            error(["sort", "   "], "需要 1 个对象", "arg")
+
     elif var["rcx"] in var["call"]:
         if var.get(var["rcx"]):
             try:
@@ -848,6 +866,7 @@ if __name__ == "__main__":
 #     cat                 - 查看文件
 #     for <对象>          - 遍历对象到eax
 #         <对象> if <if>  - 条件遍历
+#     sort <对象>         - 对对象进行排序并存储在eax寄存器中
 #     exit                - 退出解释器
 #
 #   命令行参数:
@@ -915,6 +934,9 @@ if __name__ == "__main__":
 #     for:
 #       mov string <对象>
 #       mov rcx for
+#     sort:
+#       mov string <对象>
+#       mov rcx sort
 #     exit:
 #       mov rcx exit
 #
