@@ -535,6 +535,14 @@ def main(cmd):
             cmd.append("   ")
             error(cmd, "\"join\" 需要 1 个对象", "arg")
 
+    elif cmd[0] == "len":
+        if len(cmd) >= 2:
+            var["string"] = cmd[1]
+            var["rcx"]    = "len"
+        else:
+            cmd.append("   ")
+            error(cmd, "\"len\" 需要 1 个字符串", "arg")
+
     else:
         error(cmd, "未找到此指令", "command")
 
@@ -756,6 +764,12 @@ def status():
         else:
             error(["join", "   "], "需要 1 个对象", "arg")
 
+    elif var["rcx"] == "len":
+        if var.get("string"):
+            var["eax"] = len(var["string"])
+        else:
+            error(["len", "   "], "需要 1 个字符串", "arg")
+
     elif var["rcx"] in var["call"]:
         if var.get(var["rcx"]):
             try:
@@ -895,6 +909,9 @@ if __name__ == "__main__":
 #     for <对象>          - 遍历对象到eax
 #         <对象> if <if>  - 条件遍历
 #     sort <对象>         - 对对象进行排序并存储在eax寄存器中
+#     split <字符串>      - 将字符串按空格拆分为列表并存储在eax寄存器中
+#     join <对象>         - 将对象按空格连接为字符串并存储在eax寄存器中
+#     len <字符串>        - 获取字符串长度并存储在eax寄存器中
 #     exit                - 退出解释器
 #
 #   命令行参数:
@@ -962,9 +979,21 @@ if __name__ == "__main__":
 #     for:
 #       mov string <对象>
 #       mov rcx for
+#     sleep:
+#       mov int <整数或浮点数>
+#       mov rcx sleep
 #     sort:
 #       mov string <对象>
 #       mov rcx sort
+#     split:
+#       mov string <字符串>
+#       mov rcx split
+#     join:
+#       mov string <对象>
+#       mov rcx join
+#     len:
+#       mov string <字符串>
+#       mov rcx len
 #     exit:
 #       mov rcx exit
 #
