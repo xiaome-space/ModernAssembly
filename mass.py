@@ -519,6 +519,22 @@ def main(cmd):
             cmd.append("   ")
             error(cmd, "\"sort\" 需要 1 个对象", "arg")
 
+    elif cmd[0] == "split":
+        if len(cmd) >= 2:
+            var["string"] = cmd[1]
+            var["rcx"]    = "split"
+        else:
+            cmd.append("   ")
+            error(cmd, "\"split\" 需要 1 个字符串", "arg")
+
+    elif cmd[0] == "join":
+        if len(cmd) >= 2:
+            var["string"] = cmd[1]
+            var["rcx"]    = "join"
+        else:
+            cmd.append("   ")
+            error(cmd, "\"join\" 需要 1 个对象", "arg")
+
     else:
         error(cmd, "未找到此指令", "command")
 
@@ -727,6 +743,18 @@ def status():
                 error(["sort", f"{var['string']}"], "无法排序", "arg")
         else:
             error(["sort", "   "], "需要 1 个对象", "arg")
+
+    elif var["rcx"] == "split":
+        if var.get("string"):
+            var["eax"] = var["string"].split()
+        else:
+            error(["split", "   "], "需要 1 个字符串", "arg")
+
+    elif var["rcx"] == "join":
+        if var.get("string"):
+            var["eax"] = ' '.join(var["string"])
+        else:
+            error(["join", "   "], "需要 1 个对象", "arg")
 
     elif var["rcx"] in var["call"]:
         if var.get(var["rcx"]):
