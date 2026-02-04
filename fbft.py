@@ -90,6 +90,9 @@ def fbft():
                     except Exception as e:
                         message = f"错误: {str(e)}"
 
+                else:
+                    message = "取消"
+
             elif key == 'cp':
                 cmd = input("输入目标路径: ")
                 try:
@@ -169,7 +172,7 @@ def fbft():
                 print("可用命令:")
                 print("  w/s    - 上下移动光标")
                 print("  W/S    - 快速上下移动光标")
-                print("  d      - 打开目录或文件")
+                print("  d      - 打开目录")
                 print("  rm     - 删除当前选中项")
                 print("  cp     - 复制当前选中项")
                 print("  mv     - 移动当前选中项")
@@ -180,6 +183,9 @@ def fbft():
                 print("  info   - 显示当前选中项信息")
                 print("  help   - 显示帮助信息")
                 input("\n按回车键返回...")
+
+            else:
+                message = "未知命令"
 
 #if __name__ == "__main__":
 #    fbft()
