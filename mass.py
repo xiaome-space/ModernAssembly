@@ -161,48 +161,34 @@ def preprocess_command(raw_cmd):
 
 def decision(first, mode, second):
     try:
+        ret = False if not var.get("back") == True else True
         if mode == "==":
             if first == second:
-                return True if not var.get("back") == True else False
-            else:
-                return False if not var.get("back") == True else True
+                ret =  True if not var.get("back") == True else False
         elif mode == ">":
             if first > second:
-                return True if not var.get("back") == True else False
-            else:
-                return False if not var.get("back") == True else True
+                ret = True if not var.get("back") == True else False
         elif mode == "<":
             if first < second:
-                return True if not var.get("back") == True else False
-            else:
-                return False if not var.get("back") == True else True
+                ret = True if not var.get("back") == True else False
         elif mode == ">=":
             if first >= second:
-                return True if not var.get("back") == True else False
-            else:
-                return False if not var.get("back") == True else True
+                ret = True if not var.get("back") == True else False
         elif mode == "<=":
             if first <= second:
-                return True if not var.get("back") == True else False
-            else:
-                return False if not var.get("back") == True else True
+                ret = True if not var.get("back") == True else False
         elif mode == "!=":
             if first != second:
-                return True if not var.get("back") == True else False
-            else:
-                return False if not var.get("back") == True else True
+                ret = True if not var.get("back") == True else False
         elif mode == "is":
             if first is second:
-                return True if not var.get("back") == True else False
-            else:
-                return False if not var.get("back") == True else True
+                ret = True if not var.get("back") == True else False
         elif mode == "in":
             if first in second:
-                return True if not var.get("back") == True else False
-            else:
-                return False if not var.get("back") == True else True
+                ret = True if not var.get("back") == True else False
         else:
             error(["if", repr(first), mode, repr(second)], "无效的比较模式", 2)
+        return ret
     except TypeError:
         error(["if", repr(first), mode, repr(second)], "无法比较不同类型的值", "arg")
 
